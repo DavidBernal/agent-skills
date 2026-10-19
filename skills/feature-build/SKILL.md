@@ -20,9 +20,13 @@ If the spec is ambiguous or contradicts the codebase in a way that changes behav
 
 Every scenario must be backed by an automated test that fails before the implementation and passes after it. Choose, in this order:
 
-1. If the project already runs Gherkin (e.g. Cucumber, `playwright-bdd`, `vitest-cucumber`, `pytest-bdd`, `behave`, Reqnroll/SpecFlow, Godog), write step definitions for the `.feature` directly.
-2. Otherwise, use the project's existing test runner, whatever the language: one test per scenario, named `[S<n>] <Scenario title>` (outlines: one test per Examples row), each following its Given/When/Then. Keep them in one test file per spec, named after the spec slug. Only add a Gherkin runner if the project's rules allow new dependencies and the user agrees.
-3. If the project has no test runner at all, stop and propose the standard one for its stack before writing code; setting it up becomes the first checklist item.
+1. If the project already runs Gherkin (e.g. Cucumber, `@amiceli/vitest-cucumber`, `playwright-bdd`, `pytest-bdd`, `behave`, Reqnroll/SpecFlow, Godog), write step definitions for the `.feature` directly.
+2. If the project uses Vitest, add `@amiceli/vitest-cucumber` as a dev dependency (pick the version whose `vitest` peer dependency matches the project's Vitest) and bind the `.feature` with `describeFeature`. One test file per spec, next to the code it exercises, named `<area>.feature.test.ts`. This makes every scenario and step show green/red in the test explorer and fails if a scenario or step is missing or its text drifts from the spec.
+   - Step titles must match the `.feature` text exactly (including backticks); `<var>` placeholders stay literal in outlines and values come from the `variables` argument.
+   - Share state between steps through a per-scenario object reset in the `Background` (or the first `Given`).
+   - In CommonJS projects avoid top-level `await`: use `loadFeatureFromText(readFileSync(resolve(__dirname, '<path>.feature'), 'utf8'))`.
+3. Otherwise, use the project's existing test runner, whatever the language: one test per scenario, named `[S<n>] <Scenario title>` (outlines: one test per Examples row), each following its Given/When/Then. Keep them in one test file per spec, named after the spec slug. Only add a Gherkin runner if the project's rules allow new dependencies and the user agrees.
+4. If the project has no test runner at all, stop and propose the standard one for its stack before writing code; setting it up becomes the first checklist item.
 
 Write the tests first and run them to see them fail for the right reason.
 
