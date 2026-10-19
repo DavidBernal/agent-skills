@@ -20,8 +20,9 @@ If the spec is ambiguous or contradicts the codebase in a way that changes behav
 
 Every scenario must be backed by an automated test that fails before the implementation and passes after it. Choose, in this order:
 
-1. If the project already runs Gherkin (e.g. `@cucumber/cucumber`, `playwright-bdd`, `@amiceli/vitest-cucumber`), write step definitions for the `.feature` directly.
-2. Otherwise, do not add a Gherkin runner unless the project rules allow new dependencies. Write tests in the existing runner with one test per scenario, named `[S<n>] <Scenario title>` (outlines: one test per Examples row), each following its Given/When/Then. Keep them in one test file per spec, named after the spec slug.
+1. If the project already runs Gherkin (e.g. Cucumber, `playwright-bdd`, `vitest-cucumber`, `pytest-bdd`, `behave`, Reqnroll/SpecFlow, Godog), write step definitions for the `.feature` directly.
+2. Otherwise, use the project's existing test runner, whatever the language: one test per scenario, named `[S<n>] <Scenario title>` (outlines: one test per Examples row), each following its Given/When/Then. Keep them in one test file per spec, named after the spec slug. Only add a Gherkin runner if the project's rules allow new dependencies and the user agrees.
+3. If the project has no test runner at all, stop and propose the standard one for its stack before writing code; setting it up becomes the first checklist item.
 
 Write the tests first and run them to see them fail for the right reason.
 
