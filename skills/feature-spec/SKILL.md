@@ -41,7 +41,8 @@ Rules:
 - Scenarios describe observable behaviour (what the user/system sees), not implementation. One behaviour per scenario. Use `Scenario Outline` + `Examples` for variations of the same rule.
 - Cover: happy path, each validation rule, each authorization rule, and each relevant error. No scenario that cannot be verified by an automated test.
 - The checklist lists concrete, verifiable implementation tasks (files/areas, migration, UI, tests), including the non-functional ones required by the project's rules. Each item must be checkable by reading the diff or running a command.
-- Write in the language the user used. For non-English Gherkin, put `# language: xx` on line 1 (e.g. `# language: es` → Característica / Escenario / Dado / Cuando / Entonces).
+- Gherkin keywords are always in English (`Feature`, `Background`, `Rule`, `Scenario`, `Scenario Outline`, `Examples`, `Given`, `When`, `Then`, `And`, `But`, `As a`/`I want`/`So that` lines are free text). Never add a `# language:` header: editors, formatters and highlighters only reliably support English keywords.
+- Everything else (titles, steps, decision record, checklist) is written in the language the user used. Example: `Given un comercio con un plan activo`, `Then ve el mensaje "Plan cancelado"`.
 
 If your environment does not let you write files in this phase (e.g. a read-only plan mode), put the complete `.feature` content in your plan, with its target path, and make "write the spec file exactly as planned" the first step once the plan is approved. Do not ask the user to copy it by hand.
 
