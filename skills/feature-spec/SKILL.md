@@ -43,6 +43,8 @@ Rules:
 - The checklist lists concrete, verifiable implementation tasks (files/areas, migration, UI, tests), including the non-functional ones required by the project's rules. Each item must be checkable by reading the diff or running a command.
 - Write in the language the user used. For non-English Gherkin, put `# language: xx` on line 1 (e.g. `# language: es` → Característica / Escenario / Dado / Cuando / Entonces).
 
+If your environment does not let you write files in this phase (e.g. a read-only plan mode), put the complete `.feature` content in your plan, with its target path, and make "write the spec file exactly as planned" the first step once the plan is approved. Do not ask the user to copy it by hand.
+
 ## 4. Hand-off
 
 End by telling the user the spec path and that the build agent should be invoked with it (e.g. "implement specs/0007-cancel-membership.feature"). Do not start implementing.

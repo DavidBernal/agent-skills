@@ -20,4 +20,10 @@ npx skills update                                      # pull new versions
 1. Plan agent: "plan a feature for …" → `feature-spec` → `specs/0001-….feature` (`@status-planned`).
 2. Build agent: "implement specs/0001-….feature" → `feature-build` → `@status-done`.
 
-Note: plan modes are usually read-only. Allow the plan agent to write in `specs/` (or let it hand the file to the build agent) so it can save the spec.
+## Plan-mode permissions
+
+- **opencode**: let the `plan` agent write only in `specs/` (`~/.config/opencode/opencode.json`):
+  ```json
+  { "agent": { "plan": { "permission": { "edit": { "*": "deny", "specs/**": "allow" } } } } }
+  ```
+- **Claude Code**: plan mode can't write to the repo. Either run `feature-spec` in normal mode (the skill itself forbids code changes), or stay in plan mode: the spec goes into the plan and is written as the first step after you approve it.
