@@ -4,7 +4,7 @@ Skills for AI coding agents (Claude Code, opencode, Cursor, Copilot…), install
 
 | Skill | Phase | What it does |
 |---|---|---|
-| `feature-spec` | Plan | Interviews you until the feature is clear and writes `specs/NNNN-slug.feature` with a mini ADR, a checklist and Gherkin scenarios. |
+| `feature-spec` | Plan | Interviews you until the feature is clear and writes `specs/<ticket-or-number>-slug.feature` (or follows the repo's existing spec convention) with a mini ADR, a checklist and Gherkin scenarios. |
 | `feature-build` | Build | Implements a spec: one test per scenario, every checklist item done, behaviour unchanged. |
 
 ## Install

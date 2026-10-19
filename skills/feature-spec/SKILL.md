@@ -33,7 +33,9 @@ Before writing, give the user a 5–10 line summary (scope, key decisions, scena
 
 ## 3. Write the spec
 
-Path: `specs/NNNN-short-slug.feature` (next free 4-digit number; create `specs/` if missing). Follow `references/feature-template.feature` exactly.
+Path: if the repo already has `.feature` files or a spec folder, follow its location and naming. Otherwise use `specs/<ID>-short-slug.feature`, where `<ID>` is the ticket key if the user gave one (e.g. `UNX-2801`) or else the next free 4-digit number; create the folder if missing. Follow `references/feature-template.feature` exactly.
+
+Do not put the file's own path, or a "write this file" task, inside the file: the spec only describes the feature.
 
 Rules:
 - Everything before the first `Background:`/`Rule:`/`Scenario:` is the free-text description: put the mini ADR and checklist there. Do not start description lines with a Gherkin keyword or `#` (a `#` line is a comment).
@@ -44,7 +46,7 @@ Rules:
 - Gherkin keywords are always in English (`Feature`, `Background`, `Rule`, `Scenario`, `Scenario Outline`, `Examples`, `Given`, `When`, `Then`, `And`, `But`, `As a`/`I want`/`So that` lines are free text). Never add a `# language:` header: editors, formatters and highlighters only reliably support English keywords.
 - Everything else (titles, steps, decision record, checklist) is written in the language the user used. Example: `Given un comercio con un plan activo`, `Then ve el mensaje "Plan cancelado"`.
 
-If your environment does not let you write files in this phase (e.g. a read-only plan mode), put the complete `.feature` content in your plan, with its target path, and make "write the spec file exactly as planned" the first step once the plan is approved. Do not ask the user to copy it by hand.
+If your environment does not let you write files in this phase (e.g. a read-only plan mode), put the complete `.feature` content in your plan, with its target path, and make "write the spec file exactly as planned" the first step of the plan once approved (a plan step, not a checklist item in the spec). Do not ask the user to copy it by hand.
 
 ## 4. Hand-off
 

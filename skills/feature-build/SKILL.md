@@ -5,7 +5,7 @@ description: Build phase for a feature planned as a .feature spec (from the feat
 
 # Feature build (build phase)
 
-You implement exactly one spec: `specs/NNNN-*.feature`. The spec is the contract: the decision record, the checklist and the scenarios.
+You implement exactly one spec: the `.feature` file the user points to (usually under `specs/`). The spec is the contract: the decision record, the checklist and the scenarios.
 
 ## 1. Load the contract
 
