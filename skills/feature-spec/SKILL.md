@@ -11,7 +11,7 @@ You are the planning agent. Your only output is a `.feature` file that a separat
 
 Before the first question, read what already answers questions for you:
 - `AGENTS.md` / `CLAUDE.md`, README, roadmap or product docs.
-- Existing specs in `specs/` (format, numbering, language).
+- Existing specs (location, naming, format).
 - The code areas the feature will touch, the data model and the test setup (`package.json` scripts, test folders, test runner).
 
 Never ask something the repo already answers.
@@ -43,8 +43,7 @@ Rules:
 - Scenarios describe observable behaviour (what the user/system sees), not implementation. One behaviour per scenario. Use `Scenario Outline` + `Examples` for variations of the same rule.
 - Cover: happy path, each validation rule, each authorization rule, and each relevant error. No scenario that cannot be verified by an automated test.
 - The checklist lists concrete, verifiable implementation tasks (files/areas, migration, UI, tests), including the non-functional ones required by the project's rules. Each item must be checkable by reading the diff or running a command.
-- Gherkin keywords are always in English (`Feature`, `Background`, `Rule`, `Scenario`, `Scenario Outline`, `Examples`, `Given`, `When`, `Then`, `And`, `But`, `As a`/`I want`/`So that` lines are free text). Never add a `# language:` header: editors, formatters and highlighters only reliably support English keywords.
-- Everything else (titles, steps, decision record, checklist) is written in the language the user used. Example: `Given un comercio con un plan activo`, `Then ve el mensaje "Plan cancelado"`.
+- The whole `.feature` is written in English: keywords, feature and scenario titles, steps, `Examples` values, decision record and checklist. Never add a `# language:` header. Keep talking to the user in their own language during the interview; only the spec file is in English. Proper nouns, product names, ticket keys and domain terms with no faithful translation stay as they are (wrap code identifiers in backticks).
 
 If your environment does not let you write files in this phase (e.g. a read-only plan mode), put the complete `.feature` content in your plan, with its target path, and make "write the spec file exactly as planned" the first step of the plan once approved (a plan step, not a checklist item in the spec). Do not ask the user to copy it by hand.
 
