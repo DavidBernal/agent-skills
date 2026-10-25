@@ -4,8 +4,8 @@ Skills for AI coding agents (Claude Code, opencode, Cursor, Copilot…), install
 
 | Skill | Phase | What it does |
 |---|---|---|
-| `feature-spec` | Plan | Interviews you until the feature is clear and writes `specs/<ticket-or-number>-slug.feature` (or follows the repo's existing spec convention) with a mini ADR, a checklist and Gherkin scenarios. |
-| `feature-build` | Build | Implements a spec: one test per scenario, every checklist item done, behaviour unchanged. |
+| `feature-spec` | Plan | Interviews you until the change is clear, writes `specs/changes/<ticket-or-number>.md` (mini ADR, checklist, scenario delta) and updates the living Gherkin capabilities in `specs/capabilities/`. Follows the repo's existing spec convention if there is one. |
+| `feature-build` | Build | Implements a change: one test suite per capability, every scenario passing, every checklist item done, behaviour unchanged. |
 
 ## Install
 
@@ -15,10 +15,22 @@ npx skills add <github-user>/agent-skills --skill feature-spec
 npx skills update                                      # pull new versions
 ```
 
+## Spec model
+
+```
+specs/
+  capabilities/<domain>/<capability>.feature   # how it behaves today (living)
+  changes/<ID>.md                              # why and what each change touched (frozen)
+```
+
+- Capabilities hold the user story, a **Current rules** list and the scenarios, each tagged with a stable ID and the changes behind it: `@grid-chart.02 @UNX-2813 @UNX-2817`.
+- Changes hold the decision record, the checklist and a scenario delta (added / modified / removed IDs). They are never edited after they are done.
+- One spec per ticket makes behaviour hard to find and forces new tickets to rewrite old specs. Here a ticket updates the capability and leaves its reasoning in its own change.
+
 ## Flow
 
-1. Plan agent: "plan a feature for …" → `feature-spec` → `specs/0001-….feature` (`@status-planned`).
-2. Build agent: "implement specs/0001-….feature" → `feature-build` → `@status-done`.
+1. Plan agent: "plan a feature for …" → `feature-spec` → `specs/changes/0001-….md` (`planned`) + capability edits.
+2. Build agent: "implement specs/changes/0001-….md" → `feature-build` → `done`.
 
 ## Plan-mode permissions
 
@@ -26,4 +38,4 @@ npx skills update                                      # pull new versions
   ```json
   { "agent": { "plan": { "permission": { "edit": { "*": "deny", "specs/**": "allow" } } } } }
   ```
-- **Claude Code**: plan mode can't write to the repo. Either run `feature-spec` in normal mode (the skill itself forbids code changes), or stay in plan mode: the spec goes into the plan and is written as the first step after you approve it.
+- **Claude Code**: plan mode can't write to the repo. Either run `feature-spec` in normal mode (the skill itself forbids code changes), or stay in plan mode: the spec changes go into the plan and are written as the first step after you approve it.
