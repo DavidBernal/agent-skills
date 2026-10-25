@@ -18,6 +18,13 @@ If the repo uses another spec location or still has one `.feature` per ticket, f
 
 If the spec is ambiguous, or contradicts the codebase or another capability in a way that changes behaviour, stop and report it; do not guess. Small technical details not covered by the spec are your call.
 
+Check the placement against what you find in the code. Stop and report, proposing where it should go, when:
+- the code you change also implements rules of a capability the change does not list (its scenarios would now be wrong or untested);
+- the behaviour lives in a different slice than the index says, or the capability's test suite would have to reach into another domain's code;
+- an unlisted capability's scenarios start failing because of your change.
+
+Do not silently move scenarios between capabilities or create a new capability during the build: placement is a planning decision.
+
 ## 2. Make scenarios executable
 
 Every scenario in a touched capability must be backed by an automated test. Added and modified scenarios must fail before the implementation and pass after it. Each capability has **exactly one test suite**, named after the capability (`<capability>.feature.test.ts` or the runner's equivalent) and placed next to the code that owns it. Extend the existing suite; never create a ticket-named test file.
@@ -49,6 +56,7 @@ Write or update the tests first and run them to see them fail for the right reas
 Done only when all are true:
 - Every scenario in each touched capability has a passing test, including the ones this change did not modify (state the mapping for the added and modified ones).
 - Every checklist item is ticked.
+- The capability index in `specs/README.md` matches reality for the touched capabilities (entry points, code area, test suite). Fixing a stale index row is in scope; changing what a capability covers is not.
 - Project checks pass (typecheck/lint/test scripts that exist).
 - No placeholders, TODOs or mock data left in production code.
 
