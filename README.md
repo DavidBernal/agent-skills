@@ -6,7 +6,7 @@ Skills for AI coding agents (Claude Code, opencode, Cursor, Copilot…), install
 |---|---|---|
 | `spec` | Plan | Works out which capabilities a (possibly vague) request touches, interviews you until scope and placement are clear, writes `specs/changes/<ticket-or-number>.md` (mini ADR, checklist, scenario delta) and updates the living Gherkin capabilities in `specs/capabilities/`. Follows the repo's existing spec convention if there is one. |
 | `implement` | Build | Implements a change: one test suite per capability, every scenario passing, every checklist item done, behaviour unchanged. |
-| `senior` | Any coding task | Senior developer mode: the least code that solves the task, with each business rule in one place. Reuses or extracts shared logic into services instead of copying it, keeps entry points thin, and adds no speculative abstractions. `implement` follows it when installed. |
+| `code` | Any coding task | Senior developer mode: the least code that solves the task, with each business rule in one place. Reuses or extracts shared logic into services instead of copying it, keeps entry points thin, and adds no speculative abstractions. `implement` follows it when installed. |
 
 ## Install
 

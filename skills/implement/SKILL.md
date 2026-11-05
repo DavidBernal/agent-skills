@@ -47,7 +47,7 @@ Write or update the tests first and run them to see them fail for the right reas
 ## 3. Implement
 
 - Implement the smallest change that satisfies the scenarios and checklist, respecting the decision record and out-of-scope list.
-- Write the code following the `senior` skill if it is installed. If not, at least: search for existing logic before writing, keep each business rule in one service or domain module (never copied, never inside an entry point), keep entry points thin, and add no abstraction without a reason today.
+- Write the code following the `code` skill if it is installed. If not, at least: search for existing logic before writing, keep each business rule in one service or domain module (never copied, never inside an entry point), keep entry points thin, and add no abstraction without a reason today.
 - Tick checklist items (`- [ ]` → `- [x]`) in the change file as you finish them, only when actually done.
 - Never edit scenarios, `Examples`, **Current rules** or the decision record to make tests pass. If the spec turns out to be wrong, stop and report what you'd change and why, so the user can re-plan.
 - Never edit other, older change files.
