@@ -1,5 +1,5 @@
 ---
-name: feature-spec
+name: spec
 description: Planning phase for a new feature or behaviour change in an AI-first project. Use when the user wants to plan, scope or design a feature before building it, or asks for a .feature spec, even when the request is vague about where it belongs. Locates which capabilities the change touches from the code and existing rules, interviews the user until scope and placement are unambiguous, then writes a per-change record (mini ADR, checklist, scenario delta) and updates the living Gherkin capability specs that a build agent will implement.
 ---
 
@@ -99,4 +99,4 @@ If your environment does not let you write files in this phase (e.g. a read-only
 
 ## 7. Hand-off
 
-End by telling the user the change path and the capabilities touched, and that the build agent should be invoked with the change (e.g. "implement specs/changes/0007-cancel-membership.md"). Do not start implementing.
+End by telling the user the change path and the capabilities touched, and that the `implement` skill should be invoked with the change (e.g. `/implement specs/changes/0007-cancel-membership.md`). Do not start implementing.

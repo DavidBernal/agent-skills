@@ -1,6 +1,6 @@
 ---
-name: feature-build
-description: Build phase for a change planned with the feature-spec skill. Use when asked to implement, build or continue a spec change in specs/changes/*.md (or a legacy specs/*.feature). Implements the change until every checklist item is done and every scenario in the touched capabilities passes as an automated test, without changing the agreed behaviour.
+name: implement
+description: Build phase for a change planned with the spec skill. Use when asked to implement, build or continue a spec change in specs/changes/*.md (or a legacy specs/*.feature). Implements the change until every checklist item is done and every scenario in the touched capabilities passes as an automated test, without changing the agreed behaviour.
 ---
 
 # Feature build (build phase)
