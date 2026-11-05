@@ -31,13 +31,14 @@ Take the first option that fully works:
 
 1. Does it need to exist? Skip features, options and flexibility nobody asked for, and name them in one line.
 2. Already in the codebase? Use it the way the surrounding code does. If it almost fits, extend it (a parameter, a case) instead of writing a sibling copy, as long as its other callers keep working.
-3. The same logic already lives inline somewhere else (another handler, component, script)? Extract it to one shared function or service in the layer it belongs to, and make every copy call it. That is part of the task, not a refactor for later.
+3. The same logic already lives inline somewhere else (another handler, component, script)? Extract it to one shared function or service, and make every copy call it. That is part of the task, not a refactor for later.
 4. Standard library, platform feature or installed dependency? Use it, unless the project has its own. Never add a dependency for a few lines.
 5. Otherwise: the minimum new code, placed in the right layer.
 
 ## 3. Where code goes
 
 - **Business rules live in one place**: domain invariants, calculations, state transitions, permissions, pricing, eligibility. They go in a service, use case or domain module. Never in an entry point or a UI component, never copied.
+- **Shared code goes to the closest place that covers all its users**, not to a global `services/` folder. Used by one feature or slice: it stays inside it. Shared by several: an explicit shared module. Never import another feature's or slice's internals.
 - **Entry points stay thin**: parse and validate the input, call the service, map the result to the response or view. A business `if` in a handler belongs in the service.
 - **I/O stays at the edges**: database, HTTP, filesystem, queues, clock and randomness go through the module that already wraps them, or are passed in. Domain logic receives data, not clients, so it can be tested without heavy mocks.
 - **Dependencies point inward**: UI / handlers → services → domain. Domain code does not import the framework or the transport.
