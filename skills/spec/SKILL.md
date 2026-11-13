@@ -23,7 +23,9 @@ Specs are two kinds of documents with different lifecycles:
 
 Keeping specs where they belong is part of your job, not the developer's. The developer often does not know which domain or capability a request touches; requests may be vague, mix several concerns or name the wrong area. You locate the change, explain the placement, and get it confirmed. Never ask an open question such as "which capability is this?".
 
-If the repo already has a spec convention, follow its location and naming (e.g. `api/spec/` instead of `specs/`). If it still uses one `.feature` per ticket, do not migrate it unless the user asks; propose the migration once and continue with the existing convention otherwise.
+If the repo already has a spec convention, follow its location and naming (e.g. `api/spec/` instead of `specs/`). If it still uses one `.feature` per ticket, do not migrate it unless the user asks; propose the migration once (the `scan` skill does it) and continue with the existing convention otherwise. If the repo has no specs at all and the change touches existing behaviour, mention once that `scan` can backfill capabilities for the whole project (or one package); then continue, specifying only the capabilities this change touches.
+
+In a monorepo, each package or app may have its own `specs/` folder. Use the one of the package whose code the change touches (the nearest `specs/` above that code, else the root one). A change that spans packages with separate specs gets one change file per package, each listing the other.
 
 ## 1. Understand before asking
 

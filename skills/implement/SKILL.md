@@ -5,7 +5,7 @@ description: Build phase for a change planned with the spec skill. Use when aske
 
 # Feature build (build phase)
 
-You implement exactly one change: the `specs/changes/<ID>.md` file the user points to. The contract is that change (decision record, out-of-scope list, checklist, scenario delta) plus the capability files it lists (`specs/capabilities/**/*.feature`), whose scenarios describe the behaviour after the change.
+You implement exactly one change: the `specs/changes/<ID>.md` file the user points to. The contract is that change (decision record, out-of-scope list, checklist, scenario delta) plus the capability files it lists (`specs/capabilities/**/*.feature`), whose scenarios describe the behaviour after the change. In a monorepo the change may live in a package's own `specs/` folder (e.g. `apps/api/specs/changes/<ID>.md`); its capabilities and index are in that same folder.
 
 If the repo uses another spec location or still has one `.feature` per ticket, follow its convention: for a legacy per-ticket `.feature`, the decision record, checklist, status tag and scenarios all live in that file.
 
@@ -43,6 +43,8 @@ Choose the runner in this order:
 For removed scenarios, delete their step implementations and any helper left unused. For modified scenarios, update the existing steps; do not keep the old version alongside.
 
 Write or update the tests first and run them to see them fail for the right reason.
+
+A baseline change (`Type: baseline`, written by `scan`) is the exception: its scenarios describe behaviour the code already has, so its tests must pass without touching production code. A failing one means the scenario or the code is wrong: do not fix either, stop and report it so the user decides whether to correct the spec or plan a fix with `/spec`.
 
 ## 3. Implement
 

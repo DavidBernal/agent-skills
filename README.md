@@ -4,6 +4,7 @@ Skills for AI coding agents (Claude Code, opencode, Cursor, Copilot…), install
 
 | Skill | Phase | What it does |
 |---|---|---|
+| `scan` | Adopt | For existing projects: scans the code, proposes a capability map, and once you confirm it writes the specs that would have been created along the way: `specs/README.md`, living capabilities describing today's behaviour, and one `0000-baseline` change with sources, findings (suspected bugs, open questions) and a checklist to back every scenario with characterization tests. Migrates legacy per-ticket `.feature` files into changes. |
 | `spec` | Plan | Works out which capabilities a (possibly vague) request touches, interviews you until scope and placement are clear, writes `specs/changes/<ticket-or-number>.md` (mini ADR, checklist, scenario delta) and updates the living Gherkin capabilities in `specs/capabilities/`. Follows the repo's existing spec convention if there is one. |
 | `implement` | Build | Implements a change: one test suite per capability, every scenario passing, every checklist item done, behaviour unchanged. |
 | `code` | Any coding task | Senior developer mode: the least code that solves the task, with each business rule in one place. Reuses or extracts shared logic into services instead of copying it, keeps entry points thin, and adds no speculative abstractions. `implement` follows it when installed. |
@@ -31,6 +32,7 @@ specs/
 
 ## Flow
 
+0. Adopt (existing projects, once): `/scan` (or `/scan apps/api` for one package of a monorepo, with specs in `apps/api/specs/`) creates the capabilities and `specs/changes/0000-baseline.md`; `/implement specs/changes/0000-baseline.md` turns them into passing tests without touching production code.
 1. Plan: `/spec add …` creates `specs/changes/0001-….md` (`planned`) and updates the affected capabilities.
 2. Build: `/implement specs/changes/0001-….md` implements the change and marks it `done`.
 
