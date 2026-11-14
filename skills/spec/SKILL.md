@@ -32,6 +32,7 @@ In a monorepo, each package or app may have its own `specs/` folder. Use the one
 Before the first question, read what already answers questions for you:
 - `AGENTS.md` / `CLAUDE.md`, README, roadmap or product docs, and the capability index.
 - The code areas the feature will touch, the data model and the test setup (`package.json` scripts, test folders, test runner).
+- The policies that bind the change: project rules in `AGENTS.md` / `CLAUDE.md`, and any installed skill that encodes a standard (security, API design, UX, brand, compliance, accessibility). Load the ones relevant to the areas the change touches.
 
 Never ask something the repo already answers.
 
@@ -63,6 +64,7 @@ Ask questions in short rounds (max 3–5 per round), most decisive first. Offer 
 - Integrations and side effects (payments, emails, webhooks).
 - UI states (empty, loading, error, success) if there is UI.
 - How it will be verified (which kind of test is realistic here).
+- Constraints: which policies and existing rules limit the change. When the request breaks one, or two of them cannot both be met (e.g. a UX rule says "always show a date" and a compliance rule says "never promise a date"), show both and propose a way out instead of picking one silently.
 
 Stop asking when you could write every scenario's `Then` without guessing. If the user says "decide yourself", decide, and record it in the decision record.
 
@@ -70,12 +72,16 @@ Before writing, give the user a 5–10 line summary and get a confirmation. It m
 - **Placement**: each capability touched (or created), with one line of evidence for each (the code or rule that puts it there).
 - Scope and key decisions.
 - Scenario delta: added / modified / removed, by ID.
+- Concerns still open, if any, each with its proposed handling.
 
 ## 4. Write the change
 
 Create `specs/changes/<ID>.md` following `references/change-template.md`: status `planned`, the capabilities touched, user story, decision record, checklist and scenario delta.
 
-- The checklist lists concrete, verifiable implementation tasks (files/areas, migration, UI, tests), including the non-functional ones required by the project's rules. Each item must be checkable by reading the diff or running a command.
+- The checklist lists concrete, verifiable implementation tasks (files/areas, migration, UI, tests), including the non-functional ones required by the project's rules, in the order the build should do them. Each item must be checkable by reading the diff or running a command, and cites the scenario IDs it makes pass, so a reviewer can trace every item to the behaviour it proves.
+- **Risks** (in the decision record): what the change could break for existing users or data, and the riskiest step. Each risk names the checklist item or scenario that guards it; a risk nothing guards is a missing item or scenario.
+- **Constraints**: one row per policy or existing rule that limits this change, with its source (`CLAUDE.md`, the skill's name, a capability rule) and the decision or scenario that satisfies it. Only constraints that actually bind this change; omit the section if none do.
+- **Concerns**: what the interview could not settle, mainly conflicting constraints and open questions that do not block the build. Each states the handling the build follows and who can change it. Never leave the build to guess: anything without a handling is a question for the interview, not a concern. Omit the section if there are none.
 - The scenario delta lists every scenario ID added, modified or removed, with a note for each modification or removal.
 
 ## 5. Update the capabilities and the index

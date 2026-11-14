@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Build phase for a change planned with the spec skill. Use when asked to implement, build or continue a spec change in specs/changes/*.md (or a legacy specs/*.feature). Implements the change until every checklist item is done and every scenario in the touched capabilities passes as an automated test, without changing the agreed behaviour.
+description: Build phase for a change planned with the spec skill. Use when asked to implement, build or continue a spec change in specs/changes/*.md (or a legacy specs/*.feature). Implements the change until every checklist item is done and every scenario in the touched capabilities passes as an automated test, without changing the agreed behaviour, then has the result checked by an independent verifier (the verify skill) in a fresh context.
 ---
 
 # Feature build (build phase)
@@ -11,7 +11,8 @@ If the repo uses another spec location or still has one `.feature` per ticket, f
 
 ## 1. Load the contract
 
-- Read the whole change file and every capability it lists: **Current rules**, scenarios and their `@<capability>.NN` IDs. Use the scenario delta to find which scenarios are added, modified or removed.
+- Read the whole change file and every capability it lists: **Current rules**, scenarios and their `@<capability>.NN` IDs. Use the scenario delta to find which scenarios are added, modified or removed. **Constraints** and **Concerns** are part of the contract: meet each constraint as its row says, and follow each concern's handling.
+- Note the base for verification: the current commit (`git rev-parse HEAD`) and any files already modified before you start (`git status --porcelain`).
 - Read `AGENTS.md` / `CLAUDE.md` and the specs README, and follow the project's rules (dependencies, structure, style).
 - Detect how tests run (`package.json` scripts, existing test folders) and locate each capability's test suite.
 - Set the change's status to `in-progress`.
@@ -54,7 +55,17 @@ A baseline change (`Type: baseline`, written by `scan`) is the exception: its sc
 - Never edit scenarios, `Examples`, **Current rules** or the decision record to make tests pass. If the spec turns out to be wrong, stop and report what you'd change and why, so the user can re-plan.
 - Never edit other, older change files.
 
-## 4. Definition of done
+## 4. Verify
+
+When you believe the change is done, get an independent check before declaring it.
+
+- If you can run subagents, start one with a fresh context and tell it to follow the `verify` skill (or to read its `SKILL.md` if it cannot load skills). Give it only the change path, the base commit and the files that were already modified before you started. Do not pass your summary, reasoning or test mapping: the point is a judgement free of your assumptions.
+- If the `verify` skill is not installed, give the subagent this brief instead: re-run the project checks and the touched suites; confirm every scenario's test really asserts its `Then`; confirm no existing test was skipped, deleted or loosened and no scenario, rule or decision was edited; confirm the checklist, out of scope, constraints and concerns were respected; report blocking and minor findings with `file:line`, without editing anything.
+- If you cannot run subagents, do the same checks yourself in a separate pass, re-reading the change and the diff from scratch, and say in your report that the check was not independent.
+
+Fix every blocking finding, then run the verifier again; at most two rounds. A fix never edits the spec or weakens a test. A finding marked **spec**, or one you disagree with, goes to the user with the verifier's evidence. Fix minor findings when they are cheap and inside the change's scope; report the rest.
+
+## 5. Definition of done
 
 Done only when all are true:
 - Every scenario in each touched capability has a passing test, including the ones this change did not modify (state the mapping for the added and modified ones).
@@ -62,5 +73,6 @@ Done only when all are true:
 - The capability index in `specs/README.md` matches reality for the touched capabilities (entry points, code area, test suite). Fixing a stale index row is in scope; changing what a capability covers is not.
 - Project checks pass (typecheck/lint/test scripts that exist).
 - No placeholders, TODOs or mock data left in production code.
+- The last verification passed, or its remaining findings are reported to the user.
 
-Then set the change's status to `done` and report: files changed, scenario ID → test mapping, commands run with their result, and anything deferred.
+Then set the change's status to `done` and report: files changed, scenario ID → test mapping, commands run with their result, the verifier's verdict and the findings left open, and anything deferred.
